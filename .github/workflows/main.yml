@@ -16,6 +16,9 @@ jobs:
       issues: write
     steps:
       - uses: actions/checkout@v3
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
       - name: Set up Python version
         uses: actions/setup-python@v3
         with:
@@ -40,8 +43,13 @@ jobs:
         run: |
           python update_cache.py --issue ${{ toJson(github.event.issue.body) }}
           
-      - name: Commit & Push changes
-        uses: actions-js/push@master
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "Add changes" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: update-cache
