@@ -38,6 +38,6 @@ jobs:
         
       - name: Update the cache file from the issue
         run: |
-          echo ${{ github.event.issue.body }}
+          echo ${{ toJson(github.event.issue.body) }}
           echo "#######"
           python update_cache.py --issue ${{ github.event.issue.body }}
