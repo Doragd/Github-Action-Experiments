@@ -40,23 +40,8 @@ jobs:
         run: |
           python update_cache.py --issue ${{ toJson(github.event.issue.body) }}
           
-      - name: Commit files
-        id: commit
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "github-actions"
-          git add --all
-          if [-z "$(git status --porcelain)"]; then
-             echo "::set-output name=push::false"
-          else
-             git commit -m "chore: update cache via github actions" -a
-             echo "::set-output name=push::true"
-          fi
-        shell: bash
-        
-      - name: Push changes
-        if: steps.commit.outputs.push == 'true'
-        uses: ad-m/github-push-action@master
+      - name: Commit & Push changes
+        uses: actions-js/push@master
         with:
-           github_token: ${{ secrets.GITHUB_TOKEN }}
-           branch: update-cache
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: update-cache
