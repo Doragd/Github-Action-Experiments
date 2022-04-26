@@ -11,6 +11,7 @@ def set_args():
     return args
 
 def parse_issue(issue):
+    issue = issue.replace('\\n', '').replace('\\r', '')
     try:
         info = ast.literal_eval(issue)
         assert isinstance(info, list)
