@@ -302,5 +302,17 @@
     {
         "name": "ECCV2020",
         "url": "https://dblp.org/db/conf/eccv/eccv2020-30.html"
+    },
+    {
+        "name": "ICME2021",
+        "url": "https://dblp.org/db/conf/icmcs/icme2021.html"
+    },
+    {
+        "name": "ICME2020",
+        "url": "https://dblp.org/db/conf/icmcs/icme2020.html"
+    },
+    {
+        "name": "ICME2019",
+        "url": "https://dblp.org/db/conf/icmcs/icme2019.html"
     }
 ]
