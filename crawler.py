@@ -66,6 +66,7 @@ def crawl(cache_file=None):
         assert conf.get('name') and conf.get('url') and conf.get('tag')
         url, tag, name = conf['url'], conf['tag'], conf['name']
         if name in cache_conf:
+            print("yes")
             continue
         res = search_from_acl(url, tag, name, res)
 
@@ -73,6 +74,7 @@ def crawl(cache_file=None):
         assert conf.get('name') and conf.get('url')
         url, name = conf['url'], conf['name']
         if name in cache_conf:
+            print("yes")
             continue
         res = search_from_dblp(url, name, res)
 
@@ -80,6 +82,7 @@ def crawl(cache_file=None):
         assert conf.get('name') and conf.get('url')
         url, name = conf['url'], conf['name']
         if name in cache_conf:
+            print("yes")
             continue
         res = search_from_nips(url, name, res)
 
