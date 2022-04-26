@@ -1,28 +1,40 @@
-# This is a basic workflow to help you get started with Actions
+name: update_cache
 
-name: TestIssues
-  
+env:
+  PYTHON_VERSION: '3.8'               # set this to the Python version to use
+
 on:
   issues:
     types:
       - labeled
 
-
 jobs:
-  add-comment:
-    if: github.event.label.name == 'request to update cache'
+  update-conf-list:
+    if: github.event.label.name == 'require to update cache'
     runs-on: ubuntu-latest
     permissions:
       issues: write
     steps:
-      - name: View issue information
+      - uses: actions/checkout@v3
+      - name: Set up Python version
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Create and start virtual environment
         run: |
-          echo "Issue title: ${{ github.event.issue.title }}"
-          echo "Issue body: ${{ github.event.issue.body }}"
-          
-      # You also can print the whole github context to the logs to view more details.
-      - name: View the github context
-        run: echo "$GITHUB_CONTEXT"
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
+          python -m venv venv
+          source venv/bin/activate
+      
+      - name: Set up dependency caching for faster installs
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        
+      - name: Update the cache file from the issue
+        run: python update_cache.py --issue ${{ github.event.issue.body }}
