@@ -59,14 +59,11 @@ def crawl(cache_file=None):
         # incremental update
         cache_res = json.load(open(cache_file, 'r'))
         cache_conf = [name for name in cache_res.keys()]
-    
-    import pdb; pdb.set_trace();
 
     for conf in tqdm(acl_conf, desc="[+] Crawling ACL", dynamic_ncols=True):
         assert conf.get('name') and conf.get('url') and conf.get('tag')
         url, tag, name = conf['url'], conf['tag'], conf['name']
         if name in cache_conf:
-            print("yes")
             continue
         res = search_from_acl(url, tag, name, res)
 
@@ -74,7 +71,6 @@ def crawl(cache_file=None):
         assert conf.get('name') and conf.get('url')
         url, name = conf['url'], conf['name']
         if name in cache_conf:
-            print("yes")
             continue
         res = search_from_dblp(url, name, res)
 
@@ -82,10 +78,9 @@ def crawl(cache_file=None):
         assert conf.get('name') and conf.get('url')
         url, name = conf['url'], conf['name']
         if name in cache_conf:
-            print("yes")
             continue
         res = search_from_nips(url, name, res)
-
+    res.update(cache_res)
     return res
 
 def do_crawl(cache_file=None, force=False):
