@@ -135,3 +135,4 @@ Thanks to the contributors:
 
 <a href="https://github.com/Doragd"> <img src="pics/profile/Gordon.png"  width="80" >  </a> 
 <a href="https://github.com/yhshu">  <img src="pics/profile/yiheng.png"  width="80" /></a> 
+<a href="https://github.com/doragd"><img src="https://github.com/doragd.png" height="auto" width="200" style="border-radius:50%"></a>
